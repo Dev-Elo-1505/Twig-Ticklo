@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ticklo - Simple Ticketing{% endblock %}</title>
+    
+    {# Configure Tailwind with your custom colors - must run BEFORE the CDN script #}
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5bb0fe',
+                        primaryLight: '#f8fcff',
+                        'gray-primary': '#363636'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    {# Tailwind CSS CDN (or use your compiled CSS) #}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {# Ionicons (web components) used for consistent icons across the site #}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    {# Custom CSS (optional compiled CSS) #}
+    <link rel="stylesheet" href="/css/style.css">
+
+    {# Load Inter font and define CSS variables so inline SVGs using var(--color-primary) work #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-inter: 'Inter', sans-serif;
+            --color-primary: #5bb0fe;
+            --color-primary-light: #f8fcff;
+            --color-gray-primary: #363636;
+        }
+        html, body { font-family: var(--font-inter); }
+        /* Fallback mappings so components render correctly even if Tailwind CDN didn't pick up the config yet */
+        .text-primary { color: var(--color-primary) !important; }
+        .bg-primary { background-color: var(--color-primary) !important; }
+        .bg-primaryLight { background-color: var(--color-primary-light) !important; }
+        .text-gray-primary { color: var(--color-gray-primary) !important; }
+        .font-inter { font-family: var(--font-inter) !important; }
+        .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important; }
+    </style>
+</head>
+<body class="min-h-screen bg-white flex flex-col">
+    {# Background decorations #}
+    <div aria-hidden="true" class="fixed -top-16 -left-16 w-56 h-56 rounded-full pointer-events-none blur-3xl opacity-30 md:opacity-40" style="background: var(--color-primary, #5bb0fe); z-index: 0"></div>
+    <div aria-hidden="true" class="fixed -bottom-20 -right-20 w-72 h-72 rounded-full pointer-events-none blur-2xl opacity-20 md:opacity-30" style="background: rgba(91,176,254,0.18); z-index: 0"></div>
+    
+    {# Main content #}
+    <main class="relative z-10 flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+    
+    {# Footer #}
+    {% include 'component/footer.twig' %}
+    
+    {# Toast notifications #}
+    {% if flash.success %}
+        <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-md shadow-lg z-50">
+            {{ flash.success }}
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('toast')?.remove();
+            }, 3000);
+        </script>
+    {% endif %}
+
+    {% if flash.error %}
+        <div id="toast-error" class="fixed top-4 right-4 bg-red-500 text-white px-4 py-3 rounded-md shadow-lg z-50">
+            {{ flash.error }}
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('toast-error')?.remove();
+            }, 3000);
+        </script>
+    {% endif %}
+    
+    {# Logout confirmation modal (hidden by default) #}
+    <div id="logout-modal" class="hidden fixed inset-0 z-50 items-center justify-center">
+        <div id="logout-overlay" class="absolute inset-0 bg-black/50"></div>
+        <div role="dialog" aria-modal="true" class="relative bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-6 z-10">
+            <h3 class="text-lg font-semibold mb-2">Confirm logout</h3>
+            <div class="text-sm text-gray-600 mb-4">Are you sure you want to log out?</div>
+            <div class="mt-4 flex gap-3 justify-end">
+                <button id="logout-cancel" class="px-4 py-2 rounded-md bg-gray-200 text-gray-800">Cancel</button>
+                <button id="logout-confirm" class="px-4 py-2 rounded-md bg-red-500 text-white">Log out</button>
+            </div>
+        </div>
+    </div>
+
+    {# Custom JavaScript #}
+    <script src="/js/app.js"></script>
+</body>
+</html>

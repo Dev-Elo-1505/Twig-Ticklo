@@ -1,0 +1,24 @@
+{#
+  appnavbar.twig — small reusable navbar partial
+  Usage: {% include 'component/appnavbar.twig' with { title: 'Ticklo', isLoading: false } %}
+#}
+<nav class="flex justify-between items-center font-inter max-w-[1440px] mx-auto p-4 md:px-12 md:py-6">
+  <a href="/" class="text-xl font-bold md:text-2xl text-primary">{{ title|default('Ticklo') }}</a>
+  <div class="flex gap-2 items-center">
+    {# If user is signed in show Logout only; Manage tickets lives on the dashboard per design #}
+    {% if session.user is defined and session.user.email is not empty %}
+      <button id="logout-trigger" data-logout-url="/auth/logout" type="button" class="px-3 py-2 rounded-md bg-red-500 text-white">Logout</button>
+    {% else %}
+      {% include 'component/button-link.twig' with {
+        title: 'Login',
+        location: '/auth/login',
+        customClass: 'bg-transparent text-white'
+      } %}
+
+      {% include 'component/button-link.twig' with {
+        title: 'Get Started',
+        location: '/auth/signup'
+      } %}
+    {% endif %}
+  </div>
+</nav>

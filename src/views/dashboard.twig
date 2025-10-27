@@ -1,0 +1,62 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Dashboard - Ticklo{% endblock %}
+
+{% block content %}
+    {# Use the shared AppNavbar component so behavior and layout match other pages #}
+    {% include 'component/appnavbar.twig' with { title: 'Ticklo' } %}
+
+    <div class="p-4 md:px-12 md:py-6 font-inter mx-auto max-w-[1440px]">
+        <header class="flex items-center justify-between">
+            <h1 class="text-lg font-semibold">Welcome there!</h1>
+        </header>
+
+        {# flash.success is shown as a toast only (in base.twig). Don't render inline success text here. #}
+
+        <p class="text-sm md:text-md mt-1">Here's a summary of all your tickets!</p>
+
+        {% import 'component/icons.twig' as icons %}
+
+        <div class="mt-4">
+            <div class="flex gap-2 mb-3 md:block">
+                <div class="bg-primary/10 border border-primary/30 rounded-md w-full h-32 p-2 md:p-4 md:mb-3 flex flex-col justify-between">
+                    <p class="flex items-center gap-2 ">
+                        {{ icons.ticket('text-base') }} Total Tickets
+                    </p>
+                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.total|default(0) }}</p>
+                </div>
+
+                <div class="bg-[#fef2f2] border border-[#fca5a1] rounded-md w-full h-32 p-2 md:p-4 flex flex-col justify-between">
+                    <p class="flex items-center gap-2">
+                        {{ icons.folder('text-base') }} Open Tickets
+                    </p>
+                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.open|default(0) }}</p>
+                </div>
+            </div>
+
+            <div class="flex gap-2 mb-3 md:block">
+                <div class="bg-[#fff7ed] border border-[#f7d56f] rounded-md w-full h-32 p-2 md:p-4 md:mb-3 flex flex-col justify-between">
+                    <p class="flex items-center gap-2">
+                        {{ icons.progress('text-base') }} In Progress Tickets
+                    </p>
+                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.in_progress|default(0) }}</p>
+                </div>
+
+                <div class="bg-[#f0fdf4] border border-[#6fff9a] rounded-md w-full h-32 p-2 md:p-4 flex flex-col justify-between">
+                    <p class="flex items-center gap-2">
+                        {{ icons.check('text-base') }} Closed Tickets
+                    </p>
+                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.closed|default(0) }}</p>
+                </div>
+            </div>
+        </div>
+
+        {# Use shared ButtonLink component so styles/behavior remain consistent #}
+        {% include 'component/button-link.twig' with {
+            title: 'Manage tickets',
+            location: '/tickets',
+            customClass: 'bg-primary text-white w-full block text-center mt-4'
+        } %}
+
+    </div>
+{% endblock %}

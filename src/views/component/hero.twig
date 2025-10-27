@@ -1,0 +1,38 @@
+<section class="relative p-4 md:px-12 md:py-6 text-white min-h-screen overflow-hidden bg-gradient-to-b from-primary via-primary/90 to-white"
+         style="background: linear-gradient(to bottom, var(--color-primary), rgba(91,176,254,0.12) 90%, transparent);">
+    {# Background gradient overlay #}
+    <div aria-hidden="true" class="absolute left-1/2 -translate-x-1/2 top-0 w-screen h-full bg-gradient-to-b from-primary via-primary/90 to-white z-0"></div>
+
+    {# Decorative elements #}
+    <div aria-hidden="true" class="hidden md:block absolute -top-8 right-0 translate-x-8 w-48 h-48 rounded-full bg-white/10 backdrop-blur-lg transform rotate-12 pointer-events-none z-0"></div>
+    <div aria-hidden="true" class="md:hidden absolute -bottom-6 left-4 w-28 h-28 rounded-full bg-white/10 backdrop-blur-sm pointer-events-none z-0"></div>
+
+    <div class="relative z-10">
+    {# Include navbar #}
+    {% include 'component/navbar.twig' %}
+        
+        <main class="flex flex-col items-center justify-center text-center min-h-[50vh] gap-4 mt-6 md:mt-0">
+            <div class="text-[11px] rounded-full px-3 py-1 backdrop-blur-md bg-white/20 border border-white/30 text-white shadow-sm">
+                World no. 1 ticket platform
+            </div>
+
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-white via-[#bae6fd] to-[#a5f3fc] text-transparent bg-clip-text drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">
+                Create Tickets! Track Tickets!
+            </h1>
+            
+            <p class="text-sm w-3/4">
+                Ticklo streamlines ticket management, with 
+                <a href="https://vue-ticklo.vercel.app/" target="_blank" rel="noreferrer noopener" >Vue</a> and 
+                <a href="https://react-ticklo.vercel.app/" >React</a> versions available!
+            </p>
+            
+            {% include 'component/button-link.twig' with {
+                title: 'Get Started',
+                location: '/auth/signup',
+                customClass: 'mb-4'
+            } %}
+        </main>
+    </div>
+    
+    <img src="/images/wave.svg" alt="wave" class="absolute bottom-0 left-0 w-full">
+</section>

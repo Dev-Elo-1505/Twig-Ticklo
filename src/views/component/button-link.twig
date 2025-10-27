@@ -1,0 +1,25 @@
+{# Reusable button link component
+   Behavior: if the caller passes a class that includes a bg- utility (e.g. 'bg-transparent'),
+   we avoid adding the default background so the caller can control the background fully.
+#}
+{# Reusable button link component
+   Behavior: if the caller passes a class that includes a bg- utility (e.g. 'bg-transparent'),
+   we avoid adding the default background so the caller can control the background fully.
+   Also, if caller provides a rounded- utility, don't force rounded-full.
+#}
+{% set defaultBg = 'bg-white text-primary' %}
+{% if customClass is defined and customClass is not empty and customClass matches('/bg-/') %}
+    {% set bg = '' %}
+{% else %}
+    {% set bg = defaultBg %}
+{% endif %}
+
+{# If the caller provided a rounded- class, don't add the default rounded-full. #}
+{% set hasRounded = (customClass is defined and customClass matches('/rounded-/')) %}
+{% set radius = hasRounded ? '' : ' rounded-full' %}
+
+{% set classes = (bg ~ ' p-2' ~ radius ~ ' text-sm md:text-md hover:opacity-90 active:scale-95 transition-all ' ~ (customClass|default('')))|trim %}
+
+<a href="{{ location }}" class="{{ classes }}">
+    {{ title }}
+</a>

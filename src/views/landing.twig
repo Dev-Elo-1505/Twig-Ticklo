@@ -1,0 +1,12 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Twig Ticklo {% endblock %}
+
+{% block content %}
+    {# Hero Section #}
+    {% include 'component/hero.twig' %}
+
+    {# Features Section #}
+    {% include 'component/features.twig' %}
+    {% include 'component/stats.twig' %}
+{% endblock %}

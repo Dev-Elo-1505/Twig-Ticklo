@@ -1,0 +1,14 @@
+{# feature-card.twig - renders a single feature card #}
+<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 mb-6 shadow flex flex-col md:flex-row items-center md:justify-between gap-4">
+    <div class="w-20 h-20 md:w-32 md:h-32 shrink-0">
+        {% if feature.svg is defined and feature.svg %}
+            {{ feature.svg|raw }}
+        {% elseif feature.image is defined and feature.image %}
+            <img src="{{ feature.image }}" alt="{{ feature.title }}" class="w-full h-full object-contain" />
+        {% endif %}
+    </div>
+    <div class="text-center md:text-left md:w-1/2">
+        <span class="bg-primary text-white font-semibold md:text-xl">{{ feature.title }}</span>
+        <p class="text-gray-primary text-sm mt-2 md:text-md">{{ feature.description }}</p>
+    </div>
+</div>

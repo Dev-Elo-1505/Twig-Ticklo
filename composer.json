@@ -1,0 +1,9 @@
+{
+    "name": "joy/twig-ticklo",
+    "description": "This is a ticketing management platform.",
+    "type": "project",
+    "require": {
+        "twig/twig": "*"
+    },
+    "minimum-stability": "stable"
+}

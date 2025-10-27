@@ -1,0 +1,52 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Sign up - Ticklo{% endblock %}
+
+{% block content %}
+<section class="p-6 md:p-12 font-inter">
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-6">
+      <a href="/" class="text-2xl font-bold text-primary">Ticklo</a>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div class="w-full max-w-md mx-auto">
+        <h1 class="font-semibold text-2xl mb-2">Get Started</h1>
+        <p class="text-sm text-gray-primary mb-4">Welcome to Ticklo — create your account to get started.</p>
+
+        <form class="space-y-4" method="POST" action="/auth/signup">
+          <div>
+            <label for="email" class="block text-sm mb-1">Email</label>
+            <input id="email" name="email" type="email" placeholder="Enter Email" value="{{ old.email|default('') }}" class="w-full border border-gray-300 bg-transparent rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+            {% if form_errors.email is defined %}
+              <p class="text-sm text-red-500">{{ form_errors.email }}</p>
+            {% endif %}
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm mb-1">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter Password" class="w-full border border-gray-300 bg-transparent rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+            {% if form_errors.password is defined %}
+              <p class="text-sm text-red-500">{{ form_errors.password }}</p>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="w-full bg-primary text-white p-2 rounded-full text-sm md:text-md hover:opacity-90 active:scale-95">Create account</button>
+
+          <p class="text-center text-sm text-gray-primary">Already have an account? <a href="/auth/login" class="text-primary">Log in</a></p>
+        </form>
+      </div>
+
+      <div class="hidden md:flex items-center justify-center rounded-md" style="background-color:var(--color-primary,#5bb0fe); min-height:80vh;">
+        <div class="w-full max-w-md p-8">
+          {% if auth_svg is defined and auth_svg %}
+            {{ auth_svg|raw }}
+          {% else %}
+            <img src="/images/auth.svg" alt="auth illustration" class="w-full h-auto" />
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
