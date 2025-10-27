@@ -24,6 +24,16 @@ function json_response($data, $statusCode = 200) {
 }
 
 function getDataPath() {
+    // Prefer mounted DATA_DIR (set in Render) so persistent disk works.
+    $env = getenv('DATA_DIR');
+    if ($env && is_string($env) && $env !== '') {
+        $dir = rtrim($env, '/\\') . DIRECTORY_SEPARATOR;
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+        return $dir;
+    }
+
     return __DIR__ . '/../data/';
 }
 

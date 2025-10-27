@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: twig-ticketing
+    env: docker
+    region: oregon
+    plan: free
+    branch: main
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    # disk:
+    #   sizeGb: 1
+    #   mountPath: /data

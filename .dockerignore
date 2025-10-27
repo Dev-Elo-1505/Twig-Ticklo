@@ -1,0 +1,10 @@
+vendor/
+node_modules/
+.git
+.idea
+.vscode
+.env
+npm-debug.log
+.DS_Store
+public/css/style.css
+data/
