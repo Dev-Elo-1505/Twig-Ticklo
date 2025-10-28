@@ -17,10 +17,27 @@ function showTickets($twig) {
         return $b['id'] <=> $a['id'];
     });
     
+    // Try to inline the new-ticket SVG to match the React UI
+    $svg = '';
+    $imagePath = dirname(dirname(__DIR__)) . '/public/images/newTicket.svg';
+    if (file_exists($imagePath)) {
+        $raw = file_get_contents($imagePath);
+        if ($raw !== false) {
+            // replace hardcoded primary color with CSS variable and strip width/height
+            $raw = preg_replace('/#6c63ff/i', 'var(--color-primary)', $raw);
+            $raw = preg_replace('/\s(width|height)="[^"]*"/i', '', $raw);
+            if (!preg_match('/<svg[^>]*\bstyle\s*=\s*/i', $raw)) {
+                $raw = preg_replace('/<svg(\b[^>]*)>/i', '<svg$1 style="width:100%;height:auto;display:block;">', $raw, 1);
+            }
+            $svg = $raw;
+        }
+    }
+
     echo $twig->render('tickets.twig', [
         'tickets' => array_values($userTickets),
         'success' => $_SESSION['success'] ?? null,
-        'error' => $_SESSION['error'] ?? null
+        'error' => $_SESSION['error'] ?? null,
+        'new_ticket_svg' => $svg,
     ]);
     unset($_SESSION['success'], $_SESSION['error']);
 }
