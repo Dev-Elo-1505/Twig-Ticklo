@@ -19,5 +19,6 @@ COPY --from=builder /app /app
 ENV PORT=8080
 EXPOSE 8080
 
-# Start built-in PHP server binding to the Render provided $PORT
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT} -t public"]
+# Start built-in PHP server binding to the Render provided $PORT using a router
+# so requests for directories are forwarded to index.php
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT} -t public router.php"]
