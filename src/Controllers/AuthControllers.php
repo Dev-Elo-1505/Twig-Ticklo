@@ -2,7 +2,9 @@
 require_once __DIR__ . '/../helpers.php';
 
 function showLoginPage($twig) {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     if (isset($_SESSION['user'])) {
         redirect('/dashboard');
     }
@@ -13,7 +15,9 @@ function showLoginPage($twig) {
 }
 
 function showSignupPage($twig) {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     if (isset($_SESSION['user'])) {
         redirect('/dashboard');
     }
@@ -24,7 +28,9 @@ function showSignupPage($twig) {
 }
 
 function handleLogin($request) {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     
     $email = $request->request->get('email');
     $password = $request->request->get('password');
@@ -61,7 +67,9 @@ function handleLogin($request) {
 }
 
 function handleSignup($request) {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     
     $email = $request->request->get('email');
     $password = $request->request->get('password');
@@ -104,7 +112,9 @@ function handleSignup($request) {
 }
 
 function handleLogout() {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     session_destroy();
     redirect('/');
 }

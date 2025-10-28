@@ -25,7 +25,9 @@ function showSignupPage(\Twig\Environment $twig)
 
 function handleSignup($request)
 {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -98,7 +100,9 @@ function showLoginPage(\Twig\Environment $twig)
 
 function handleLogin($request)
 {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -148,7 +152,9 @@ function handleLogin($request)
 
 function handleLogout()
 {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     unset($_SESSION['ticketapp_session']);
     // Also clear canonical user object
     unset($_SESSION['user']);
