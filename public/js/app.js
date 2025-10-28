@@ -111,6 +111,50 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       }
     });
+
+    // AJAX submit for ticket create/edit form to avoid unexpected redirects and to allow inline update
+    const ticketForm = document.getElementById('ticket-form');
+    if (ticketForm) {
+      ticketForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('ticket-submit');
+        submitBtn && (submitBtn.disabled = true);
+
+        const action = ticketForm.getAttribute('action') || '/tickets/create';
+        const formData = new FormData(ticketForm);
+
+        fetch(action, {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin'
+        }).then(function (res) {
+          // On success, navigate to tickets page which will show updated list
+          window.location.href = '/tickets';
+        }).catch(function (err) {
+          console.error('Ticket submit failed', err);
+          alert('Failed to submit ticket. Please try again.');
+        }).finally(function () {
+          submitBtn && (submitBtn.disabled = false);
+        });
+      });
+    }
+
+    // AJAX submit for delete form
+    const deleteForm = document.getElementById('delete-form');
+    if (deleteForm) {
+      deleteForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const btn = document.getElementById('delete-confirm-btn');
+        btn && (btn.disabled = true);
+        const action = deleteForm.getAttribute('action') || '/';
+        fetch(action, { method: 'POST', credentials: 'same-origin' }).then(function () {
+          window.location.href = '/tickets';
+        }).catch(function (err) {
+          console.error('Delete failed', err);
+          alert('Failed to delete ticket');
+        }).finally(function () { btn && (btn.disabled = false); });
+      });
+    }
   confirmBtn?.addEventListener("click", function () {
     // navigate to logout url
     const url =
