@@ -154,3 +154,19 @@ function deleteTicket($id) {
     $_SESSION['success'] = 'Ticket deleted';
     redirect('/tickets');
 }
+
+function ticketStats() {
+    requireAuth();
+    $tickets = readJsonFile('tickets.json');
+    $userEmail = $_SESSION['user']['email'];
+    $userTickets = array_filter($tickets, function($ticket) use ($userEmail) {
+        return $ticket['user'] === $userEmail;
+    });
+    $stats = [
+        'total' => count($userTickets),
+        'open' => count(array_filter($userTickets, fn($t) => $t['status'] === 'open')),
+        'in_progress' => count(array_filter($userTickets, fn($t) => $t['status'] === 'in_progress')),
+        'closed' => count(array_filter($userTickets, fn($t) => $t['status'] === 'closed'))
+    ];
+    json_response(['stats' => $stats]);
+}

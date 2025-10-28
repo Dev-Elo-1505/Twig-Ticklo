@@ -107,6 +107,11 @@ try {
             handleLogout();
             break;
 
+        case $uri === '/tickets/stats' && $method === 'GET':
+            require __DIR__ . '/../src/Controllers/TicketController.php';
+            ticketStats();
+            break;
+
         case $uri === '/dashboard':
             require __DIR__ . '/../src/Controllers/DashboardController.php';
             showDashboard($twig);
