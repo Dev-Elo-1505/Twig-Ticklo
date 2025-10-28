@@ -1,0 +1,33 @@
+{# Reusable ticket creation/edit modal. Displayed when JS toggles #}
+<div id="create-ticket-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/50" data-modal-close="true"></div>
+
+    <div role="dialog" aria-modal="true" class="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full mx-4 p-6">
+        <h3 class="text-lg font-semibold mb-2">Create New Ticket</h3>
+        <form method="post" action="/tickets/create" class="space-y-4">
+            <div>
+                <label for="title" class="block text-sm mb-1">Title</label>
+                <input id="title" name="title" type="text" class="w-full border border-gray-300 bg-transparent rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+            </div>
+
+            <div>
+                <label for="status" class="block text-sm mb-1">Status</label>
+                <select id="status" name="status" class="w-full border border-gray-300 bg-transparent rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm mb-1">Description</label>
+                <textarea id="description" name="description" rows="5" class="w-full border border-gray-300 bg-transparent rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Description (optional)"></textarea>
+            </div>
+
+            <div class="mt-4 flex gap-3 justify-end">
+                <button type="button" data-modal-close="true" class="px-4 py-2 rounded-md bg-gray-200">Cancel</button>
+                <button type="submit" class="px-4 py-2 rounded-md bg-primary text-white">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
