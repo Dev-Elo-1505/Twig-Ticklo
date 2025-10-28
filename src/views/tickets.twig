@@ -43,15 +43,24 @@
                                     {% endif %}
                                 </div>
                                 <div class="flex items-center justify-end gap-2 mt-4">
-                                    <form method="post" action="/tickets/{{ tk.id }}/edit" style="display:inline-block">
-                                        <input type="hidden" name="title" value="{{ tk.title|e }}">
-                                        <input type="hidden" name="description" value="{{ tk.description|e }}">
-                                        <input type="hidden" name="status" value="{{ tk.status }}">
-                                        <button type="submit" class="px-3 py-2 rounded-md bg-gray-200">Edit</button>
-                                    </form>
-                                    <form method="post" action="/tickets/{{ tk.id }}/delete" style="display:inline-block">
-                                        <button type="submit" class="px-3 py-2 rounded-md bg-red-500 text-white">Delete</button>
-                                    </form>
+                                    <button
+                                        data-modal-target="create-ticket-modal"
+                                        data-ticket-id="{{ tk.id }}"
+                                        data-ticket-title="{{ tk.title|e('html_attr') }}"
+                                        data-ticket-description="{{ tk.description|e('html_attr') }}"
+                                        data-ticket-status="{{ tk.status }}"
+                                        class="px-3 py-2 rounded-md bg-gray-200"
+                                    >
+                                        Edit
+                                    </button>
+
+                                    <button
+                                        data-modal-target="delete-ticket-modal"
+                                        data-ticket-id="{{ tk.id }}"
+                                        class="px-3 py-2 rounded-md bg-red-500 text-white"
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         {% endfor %}
@@ -61,6 +70,8 @@
         </main>
 
         {# Include the create/edit ticket modal partial #}
+        {# Include the create-ticket modal partial and delete modal #}
         {% include 'component/create-ticket.twig' %}
+        {% include 'component/delete-ticket.twig' %}
     </div>
 {% endblock %}

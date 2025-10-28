@@ -39,6 +39,50 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.overflow = 'hidden';
         // focus first focusable element if present
         setTimeout(() => modal.querySelector('input,button,select,textarea')?.focus(), 0);
+        // If this button carries ticket data for editing, populate the create modal
+        if (target === 'create-ticket-modal') {
+          const id = btn.getAttribute('data-ticket-id');
+          const title = btn.getAttribute('data-ticket-title') || '';
+          const description = btn.getAttribute('data-ticket-description') || '';
+          const status = btn.getAttribute('data-ticket-status') || 'open';
+          const form = document.getElementById('ticket-form');
+          if (form) {
+            const idInput = document.getElementById('ticket-id');
+            const titleInput = document.getElementById('ticket-title');
+            const descInput = document.getElementById('ticket-description');
+            const statusInput = document.getElementById('ticket-status');
+            const submitBtn = document.getElementById('ticket-submit');
+            if (id) {
+              // editing
+              idInput.value = id;
+              titleInput.value = title;
+              descInput.value = description;
+              statusInput.value = status;
+              form.action = '/tickets/' + encodeURIComponent(id) + '/edit';
+              if (submitBtn) submitBtn.textContent = 'Update';
+              const titleHdr = document.getElementById('create-ticket-title');
+              if (titleHdr) titleHdr.textContent = 'Edit Ticket';
+            } else {
+              // creating
+              idInput.value = '';
+              titleInput.value = '';
+              descInput.value = '';
+              statusInput.value = 'open';
+              form.action = '/tickets/create';
+              if (submitBtn) submitBtn.textContent = 'Create';
+              const titleHdr = document.getElementById('create-ticket-title');
+              if (titleHdr) titleHdr.textContent = 'Create New Ticket';
+            }
+          }
+        }
+        // If this button is for delete, set the delete form action
+        if (target === 'delete-ticket-modal') {
+          const id = btn.getAttribute('data-ticket-id');
+          const deleteForm = document.getElementById('delete-form');
+          if (deleteForm && id) {
+            deleteForm.action = '/tickets/' + encodeURIComponent(id) + '/delete';
+          }
+        }
       });
     });
 
