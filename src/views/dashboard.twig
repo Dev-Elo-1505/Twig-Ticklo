@@ -23,14 +23,14 @@
                     <p class="flex items-center gap-2 ">
                         {{ icons.ticket('text-base') }} Total Tickets
                     </p>
-                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.total|default(0) }}</p>
+                    <p id="stat-total" class="text-4xl font-bold mt-2 text-right">{{ stats.total|default(0) }}</p>
                 </div>
 
                 <div class="bg-[#fef2f2] border border-[#fca5a1] rounded-md w-full h-32 p-2 md:p-4 flex flex-col justify-between">
                     <p class="flex items-center gap-2">
                         {{ icons.folder('text-base') }} Open Tickets
                     </p>
-                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.open|default(0) }}</p>
+                    <p id="stat-open" class="text-4xl font-bold mt-2 text-right">{{ stats.open|default(0) }}</p>
                 </div>
             </div>
 
@@ -39,14 +39,14 @@
                     <p class="flex items-center gap-2">
                         {{ icons.progress('text-base') }} In Progress Tickets
                     </p>
-                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.in_progress|default(0) }}</p>
+                    <p id="stat-in-progress" class="text-4xl font-bold mt-2 text-right">{{ stats.in_progress|default(0) }}</p>
                 </div>
 
                 <div class="bg-[#f0fdf4] border border-[#6fff9a] rounded-md w-full h-32 p-2 md:p-4 flex flex-col justify-between">
                     <p class="flex items-center gap-2">
                         {{ icons.check('text-base') }} Closed Tickets
                     </p>
-                    <p class="text-4xl font-bold mt-2 text-right">{{ stats.closed|default(0) }}</p>
+                    <p id="stat-closed" class="text-4xl font-bold mt-2 text-right">{{ stats.closed|default(0) }}</p>
                 </div>
             </div>
         </div>

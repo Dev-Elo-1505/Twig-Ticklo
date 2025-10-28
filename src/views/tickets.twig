@@ -15,7 +15,7 @@
                     </div>
                     <div class="mt-4 text-center">
                         <h3 class="font-light text-sm mb-2">Get started by creating a new ticket</h3>
-                        <button data-modal-target="create-ticket-modal" class="px-4 py-2 rounded-md bg-primary text-white">Create Ticket</button>
+                        <button data-modal-target="create-ticket-modal" class="px-4 py-2 rounded-full bg-primary text-white w-full">Create Ticket</button>
                     </div>
                 </div>
             {% else %}
@@ -23,8 +23,8 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold md:mb-4">Recent Tickets</h2>
                         <div class="flex flex-col md:flex-row md:items-center md:gap-2">
-                            {% include 'component/button-link.twig' with { title: 'Go to Dashboard', location: '/dashboard', customClass: 'bg-primary text-white text-center w-full md:w-36 mb-2 mt-2' } %}
-                            <button data-modal-target="create-ticket-modal" class="px-4 py-2 rounded-md bg-primary text-white w-full md:w-32">Create Ticket</button>
+                            {% include 'component/button-link.twig' with { title: 'Go to Dashboard', location: '/dashboard', customClass: 'bg-primary text-white text-center w-full md:w-36 mb-2 mt-2 rounded-full' } %}
+                            <button data-modal-target="create-ticket-modal" class="px-4 py-2 rounded-md bg-primary text-white w-full md:w-32 rounded-full">Create Ticket</button>
                         </div>
                     </div>
 

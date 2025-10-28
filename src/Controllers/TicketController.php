@@ -66,7 +66,22 @@ function createTicket($request) {
     
     $tickets[] = $newTicket;
     writeJsonFile('tickets.json', $tickets);
-    
+
+    // Prepare stats for current user
+    $userEmail = $_SESSION['user']['email'];
+    $userTickets = array_filter($tickets, function($t) use ($userEmail) { return $t['user'] === $userEmail; });
+    $stats = [
+        'total' => count($userTickets),
+        'open' => count(array_filter($userTickets, fn($t) => $t['status'] === 'open')),
+        'in_progress' => count(array_filter($userTickets, fn($t) => $t['status'] === 'in_progress')),
+        'closed' => count(array_filter($userTickets, fn($t) => $t['status'] === 'closed'))
+    ];
+
+    // If AJAX request, return JSON so client can reconcile and update dashboard immediately
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+        json_response(['ticket' => $newTicket, 'stats' => $stats]);
+    }
+
     $_SESSION['success'] = 'Ticket created';
     redirect('/tickets');
 }
@@ -95,7 +110,19 @@ function updateTicket($request, $id) {
     $tickets[$index]['status'] = $request->request->get('status', 'open');
     
     writeJsonFile('tickets.json', $tickets);
-    
+    // Prepare stats for current user
+    $userTickets = array_filter($tickets, function($ticket) use ($userEmail) { return $ticket['user'] === $userEmail; });
+    $stats = [
+        'total' => count($userTickets),
+        'open' => count(array_filter($userTickets, fn($t) => $t['status'] === 'open')),
+        'in_progress' => count(array_filter($userTickets, fn($t) => $t['status'] === 'in_progress')),
+        'closed' => count(array_filter($userTickets, fn($t) => $t['status'] === 'closed'))
+    ];
+
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+        json_response(['ticket' => $tickets[$index], 'stats' => $stats]);
+    }
+
     $_SESSION['success'] = 'Ticket updated';
     redirect('/tickets');
 }
@@ -111,7 +138,19 @@ function deleteTicket($id) {
     });
     
     writeJsonFile('tickets.json', array_values($tickets));
-    
+    // Prepare stats for current user
+    $userTickets = array_filter($tickets, function($ticket) use ($userEmail) { return $ticket['user'] === $userEmail; });
+    $stats = [
+        'total' => count($userTickets),
+        'open' => count(array_filter($userTickets, fn($t) => $t['status'] === 'open')),
+        'in_progress' => count(array_filter($userTickets, fn($t) => $t['status'] === 'in_progress')),
+        'closed' => count(array_filter($userTickets, fn($t) => $t['status'] === 'closed'))
+    ];
+
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+        json_response(['deleted_id' => $id, 'stats' => $stats]);
+    }
+
     $_SESSION['success'] = 'Ticket deleted';
     redirect('/tickets');
 }
