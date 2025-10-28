@@ -128,8 +128,18 @@ document.addEventListener("DOMContentLoaded", function () {
           body: formData,
           credentials: 'same-origin'
         }).then(function (res) {
-          // On success, navigate to tickets page which will show updated list
-          window.location.href = '/tickets';
+          // Close create modal if open
+          const createModal = document.getElementById('create-ticket-modal');
+          if (createModal) {
+            createModal.classList.add('hidden');
+            document.body.style.overflow = '';
+          }
+          // On success, if already on /tickets reload to fetch updated list; otherwise navigate there
+          if (window.location.pathname === '/tickets') {
+            window.location.reload();
+          } else {
+            window.location.href = '/tickets';
+          }
         }).catch(function (err) {
           console.error('Ticket submit failed', err);
           alert('Failed to submit ticket. Please try again.');
@@ -148,7 +158,16 @@ document.addEventListener("DOMContentLoaded", function () {
         btn && (btn.disabled = true);
         const action = deleteForm.getAttribute('action') || '/';
         fetch(action, { method: 'POST', credentials: 'same-origin' }).then(function () {
-          window.location.href = '/tickets';
+          const deleteModal = document.getElementById('delete-ticket-modal');
+          if (deleteModal) {
+            deleteModal.classList.add('hidden');
+            document.body.style.overflow = '';
+          }
+          if (window.location.pathname === '/tickets') {
+            window.location.reload();
+          } else {
+            window.location.href = '/tickets';
+          }
         }).catch(function (err) {
           console.error('Delete failed', err);
           alert('Failed to delete ticket');
